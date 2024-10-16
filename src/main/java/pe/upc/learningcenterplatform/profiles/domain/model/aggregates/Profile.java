@@ -17,7 +17,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     private PersonName name;
 
     @Embedded
-    EmailAddress emailAddress;
+    EmailAddress email;
 
     @Embedded
     @AttributeOverrides({
@@ -34,7 +34,7 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
 
     public Profile(String firstName, String lastName, String email, String street, String number, String city, String postalCode, String country) {
         this.name = new PersonName(firstName, lastName);
-        this.emailAddress = new EmailAddress(email);
+        this.email = new EmailAddress(email);
         this.address = new StreetAddress(street, number, city, postalCode, country);
     }
 
@@ -47,6 +47,6 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     }
 
     public String getEmailAddress() {
-        return emailAddress.address();
+        return email.address();
     }
 }
