@@ -1,5 +1,6 @@
 package pe.upc.learningcenterplatform.profiles.application;
 
+import org.springframework.stereotype.Service;
 import pe.upc.learningcenterplatform.profiles.domain.model.aggregates.Profile;
 import pe.upc.learningcenterplatform.profiles.domain.model.queries.GetAllProfilesQuery;
 import pe.upc.learningcenterplatform.profiles.domain.model.queries.GetProfileByEmailQuery;
@@ -10,6 +11,7 @@ import pe.upc.learningcenterplatform.profiles.infrastructure.persistence.jpa.rep
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProfileQueryServiceImpl implements ProfileQueryService {
 
     private final ProfileRepository profileRepository;
