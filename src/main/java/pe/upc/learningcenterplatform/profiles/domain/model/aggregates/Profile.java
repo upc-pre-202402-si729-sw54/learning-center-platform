@@ -20,6 +20,13 @@ public class Profile extends AuditableAbstractAggregateRoot<Profile> {
     EmailAddress emailAddress;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "address_street")),
+            @AttributeOverride(name = "number", column = @Column(name = "address_number")),
+            @AttributeOverride(name = "city", column = @Column(name = "address_city")),
+            @AttributeOverride(name = "postalCode", column = @Column(name = "address_postalCode")),
+            @AttributeOverride(name = "country", column = @Column(name = "address_country")),
+    })
     private StreetAddress address;
 
     public Profile() {
