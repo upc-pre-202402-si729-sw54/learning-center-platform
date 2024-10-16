@@ -15,7 +15,7 @@ public class AuditableAbstractAggregateRoot<T extends AbstractAggregateRoot<T>> 
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
 
     @Getter
     @CreatedDate
