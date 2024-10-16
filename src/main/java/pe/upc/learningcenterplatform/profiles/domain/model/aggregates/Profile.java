@@ -6,7 +6,7 @@ import lombok.Setter;
 import pe.upc.learningcenterplatform.profiles.domain.model.valueobjects.EmailAddress;
 import pe.upc.learningcenterplatform.profiles.domain.model.valueobjects.PersonName;
 import pe.upc.learningcenterplatform.profiles.domain.model.valueobjects.StreetAddress;
-import pe.upc.learningcenterplatform.shared.domain.model.entities.AuditableAbstractAggregateRoot;
+import pe.upc.learningcenterplatform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 @Entity
 @Getter

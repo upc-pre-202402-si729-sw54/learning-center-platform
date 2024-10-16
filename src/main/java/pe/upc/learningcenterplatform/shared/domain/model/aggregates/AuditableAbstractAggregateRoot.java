@@ -1,4 +1,4 @@
-package pe.upc.learningcenterplatform.shared.domain.model.entities;
+package pe.upc.learningcenterplatform.shared.domain.model.aggregates;
 
 import jakarta.persistence.*;
 import lombok.Getter;
