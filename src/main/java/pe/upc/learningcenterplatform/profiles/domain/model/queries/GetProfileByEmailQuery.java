@@ -1,4 +1,6 @@
 package pe.upc.learningcenterplatform.profiles.domain.model.queries;
 
-public record GetProfileByEmailQuery() {
+import pe.upc.learningcenterplatform.profiles.domain.model.valueobjects.EmailAddress;
+
+public record GetProfileByEmailQuery(EmailAddress emailAddress) {
 }
