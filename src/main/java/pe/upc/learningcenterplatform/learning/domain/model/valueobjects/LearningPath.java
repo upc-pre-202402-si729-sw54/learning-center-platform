@@ -32,6 +32,10 @@ public class LearningPath {
         return this.getFirstLearningPathItemWhere(item-> item.getId().equals(itemId));
     }
 
+    public TutorialId getFirstTutorialInLearningPath() {
+        return learningPathItems.getFirst().getTutorialId();
+    }
+
     private LearningPathItem getFirstLearningPathItemWhere(Predicate<LearningPathItem> predicate){
         return learningPathItems.stream()
                 .filter(predicate)

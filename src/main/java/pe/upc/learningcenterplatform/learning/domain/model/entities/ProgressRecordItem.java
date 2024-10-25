@@ -3,6 +3,7 @@ package pe.upc.learningcenterplatform.learning.domain.model.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
 import pe.upc.learningcenterplatform.learning.domain.model.aggregates.Enrollment;
 import pe.upc.learningcenterplatform.learning.domain.model.valueobjects.ProgressStatus;
 import pe.upc.learningcenterplatform.learning.domain.model.valueobjects.TutorialId;
@@ -17,10 +18,12 @@ import java.util.Objects;
 @Entity
 public class ProgressRecordItem extends AuditableModel {
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "enrollment_id")
     private Enrollment enrollment;
 
+    @Getter
     private TutorialId tutorialId;
 
     private ProgressStatus progressStatus;
