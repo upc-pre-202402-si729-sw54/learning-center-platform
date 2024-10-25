@@ -17,7 +17,7 @@ import pe.upc.learningcenterplatform.shared.domain.model.aggregates.AuditableAbs
  * It contains the student record id, profile id, and performance metrics.
  * @see AcmeStudentRecordId
  * @see ProfileId
- * @see StudentPerformanceMetricsSet
+ * @see StudentPerformanceMetricSet
  * @see AuditableAbstractAggregateRoot
  * @since 1.0
  */
