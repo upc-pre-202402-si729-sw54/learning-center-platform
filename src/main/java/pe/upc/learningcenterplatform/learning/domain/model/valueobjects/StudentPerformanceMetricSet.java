@@ -1,5 +1,8 @@
 package pe.upc.learningcenterplatform.learning.domain.model.valueobjects;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public record StudentPerformanceMetricSet(Integer totalCompletedCourses, Integer totalCompleteTutorials) {
     public StudentPerformanceMetricSet(){
         this(0,0);
