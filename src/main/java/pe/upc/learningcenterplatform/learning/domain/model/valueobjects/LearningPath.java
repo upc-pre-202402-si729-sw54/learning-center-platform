@@ -8,6 +8,7 @@ import pe.upc.learningcenterplatform.learning.domain.model.entities.LearningPath
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 @Embeddable
 public class LearningPath {
@@ -27,6 +28,17 @@ public class LearningPath {
         return learningPathItems.isEmpty();
     }
 
+    private LearningPathItem getLearningPathItemWithId(Long itemId){
+        return this.getFirstLearningPathItemWhere(item-> item.getId().equals(itemId));
+    }
+
+    private LearningPathItem getFirstLearningPathItemWhere(Predicate<LearningPathItem> predicate){
+        return learningPathItems.stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
+    }
+
     /**
      * Get the last tutorial in the learning path
      * @return The id of the last tutorial in the learning path
@@ -38,12 +50,16 @@ public class LearningPath {
                 .orElse(null);
     }
 
-
     public LearningPathItem getLearningPathItemWithTutorialId(TutorialId tutorialId) {
         return learningPathItems.stream()
                 .filter(item -> item.getTutorialId().equals(tutorialId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public TutorialId getNextTutorialInLearningPath(TutorialId currentTutorialId) {
+        LearningPathItem nextItem = getLearningPathItemWithTutorialId(currentTutorialId).getNextItem();
+        return !Objects.isNull(nextItem) ? nextItem.getTutorialId() : null;
     }
 
     /**
