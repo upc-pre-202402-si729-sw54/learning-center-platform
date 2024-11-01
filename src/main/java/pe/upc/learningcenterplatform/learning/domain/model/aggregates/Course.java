@@ -11,6 +11,7 @@ import pe.upc.learningcenterplatform.shared.domain.model.aggregates.AuditableAbs
 @Getter
 @Entity
 public class Course extends AuditableAbstractAggregateRoot<Course> {
+
     private String title;
     private String description;
 
