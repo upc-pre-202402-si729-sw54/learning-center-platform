@@ -20,11 +20,11 @@ public class StudentQueryServiceImpl implements StudentQueryService {
 
     @Override
     public Optional<Student> handle(GetStudentByProfileIdQuery query) {
-        return Optional.empty();
+        return studentRepository.findByProfileId(query.profileId());
     }
 
     @Override
     public Optional<Student> handle(GetStudentByAcmeStudentRecordIdQuery query) {
-        return Optional.empty();
+        return studentRepository.findByAcmeStudentRecordId(query.studentRecordId());
     }
 }
