@@ -5,10 +5,5 @@ import pe.upc.learningcenterplatform.learning.domain.model.valueobjects.AcmeStud
 /**
  * Query to get all enrollments
  */
-public record GetAllEnrollmentsQuery(AcmeStudentRecordId studentRecordId) {
-    public GetAllEnrollmentsQuery {
-        if (studentRecordId == null || studentRecordId.studentRecordId() == null || studentRecordId.studentRecordId().isBlank()) {
-            throw new IllegalArgumentException("StudentRecordId cannot be null or empty");
-        }
-    }
+public record GetAllEnrollmentsQuery() {
 }

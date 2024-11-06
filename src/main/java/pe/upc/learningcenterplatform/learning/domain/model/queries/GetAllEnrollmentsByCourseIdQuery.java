@@ -1,9 +1,9 @@
 package pe.upc.learningcenterplatform.learning.domain.model.queries;
 
-public record GetAllEnrollmentsByCourseIdQuery(Long courseId) {
+public record GetAllEnrollmentsByCourseIdQuery(String courseId) {
     public GetAllEnrollmentsByCourseIdQuery {
-        if (courseId == null || courseId <= 0) {
-            throw new IllegalArgumentException("CourseId cannot be null or less than or equal to zero");
+        if (courseId == null || courseId.isBlank()) {
+            throw new IllegalArgumentException("courseId cannot be null or blank");
         }
     }
 }
