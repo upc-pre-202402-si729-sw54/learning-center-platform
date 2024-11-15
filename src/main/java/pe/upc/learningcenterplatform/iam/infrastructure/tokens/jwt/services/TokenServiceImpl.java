@@ -1,18 +1,26 @@
 package pe.upc.learningcenterplatform.iam.infrastructure.tokens.jwt.services;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import pe.upc.learningcenterplatform.iam.infrastructure.tokens.jwt.BearerTokenService;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
+import javax.security.sasl.AuthorizeCallback;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.function.Function;
 
 @Service
 public class TokenServiceImpl implements BearerTokenService {
@@ -32,8 +40,26 @@ public class TokenServiceImpl implements BearerTokenService {
 
 
     @Override
-    public String getBearerToken(String token) {
-        return "";
+    public String getBearerTokenFrom(HttpServletRequest request) {
+        String parameter = getAuthorizationParameterFrom(request);
+        if(isTokenPresentIn(parameter) && isBearerTokenIn(parameter)) return extractTokenFrom(parameter);
+        return null;
+    }
+
+    private String extractTokenFrom(String parameter) {
+        return parameter.substring(TOKEN_BEGIN_INDEX);
+    }
+
+    private boolean isBearerTokenIn(String parameter) {
+        return parameter.startsWith(BEARER_TOKEN_PREFIX);
+    }
+
+    private boolean isTokenPresentIn(String parameter) {
+        return StringUtils.hasText(parameter);
+    }
+
+    private String getAuthorizationParameterFrom(HttpServletRequest request) {
+        return request.getHeader(AUTHORIZATION_PARAMETER_NAME);
     }
 
     @Override
@@ -61,16 +87,38 @@ public class TokenServiceImpl implements BearerTokenService {
 
     @Override
     public String generateToken(String username) {
-        return "";
+        return buildTokenWithDefaultParameters(username);
     }
 
     @Override
     public String getUsernameFromToken(String token) {
-        return "";
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolvers.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
     }
 
     @Override
     public boolean validateToken(String token) {
-        return false;
+        try{
+            Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
+            LOGGER.info("Token is valid");
+            return true;
+        } catch (SignatureException e){
+            LOGGER.error("Invalid token");
+        } catch (MalformedJwtException e){
+            LOGGER.error("Malformed token");
+        } catch (ExpiredJwtException e){
+            LOGGER.error("Expired token");
+        } catch (IllegalArgumentException e){
+            LOGGER.error("Empty token");
+        }
+            return false;
     }
 }
